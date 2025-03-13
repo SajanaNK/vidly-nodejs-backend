@@ -22,4 +22,4 @@ function validateGenre(genre) {
     return schema.validate(genre);
 }
 
-export {Genre, validateGenre};
+export {Genre, validateGenre, genreSchema};

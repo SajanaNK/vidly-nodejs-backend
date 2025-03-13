@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { Genre, validateGenre } from '../models/genres.js';
+import { Genre, validateGenre } from '../models/genre.js';
 
 const router = express.Router();
 
