@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import express from "express"
 import {Customer, validateCustomer} from "../models/customer.js"
+import {auth} from "../middleware/auth.js"
 
 const router = express.Router();
 
@@ -40,7 +41,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', async (req,res) => {
+router.post('/', auth, async (req,res) => {
     try {
 
         const { error} = validateCustomer(req.body);
@@ -64,7 +65,7 @@ router.post('/', async (req,res) => {
 });
 
 
-router.put('/:id', async (req,res) => {
+router.put('/:id', auth, async (req,res) => {
     try {
         
         const customerId = req.params.id;
@@ -98,7 +99,7 @@ router.put('/:id', async (req,res) => {
 });
 
 
-router.delete('/:id', async (req,res) => {
+router.delete('/:id', auth, async (req,res) => {
     try {
 
         const customerId = req.params.id;

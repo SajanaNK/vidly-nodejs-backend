@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose';
 import { Movie, validateMovie } from '../models/movie.js';
 import { Genre } from '../models/genre.js';
+import {auth} from "../middleware/auth.js"
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
 
         const { error } = validateMovie(req.body);
@@ -49,7 +50,7 @@ router.post('/', async (req, res) => {
 });
 
 
-router.put('/:id', async (req, res) => {
+router.put('/:id',auth, async (req, res) => {
     try {
 
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -88,7 +89,7 @@ router.put('/:id', async (req, res) => {
 });
 
 
-router.delete('/:id', async (req,res) => {
+router.delete('/:id',auth, async (req,res) => {
     try {
 
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {

@@ -3,7 +3,7 @@ import { Rental, validateRental} from '../models/rental.js';
 import { Customer } from '../models/customer.js';
 import { Movie } from '../models/movie.js';
 import mongoose from "mongoose";
-
+import {auth} from "../middleware/auth.js"
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router.get('/', async (req,res) => {
 });
 
 
-router.post('/', async (req,res) => {
+router.post('/', auth, async (req,res) => {
     try {
 
         const {error} = validateRental(req.body);
