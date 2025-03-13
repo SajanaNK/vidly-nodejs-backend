@@ -1,44 +1,38 @@
 import express from 'express';
-import genres from './routes/genres.js';
-import customers from './routes/customers.js';
-import movies from './routes/movies.js';
-import rentals from './routes/rentals.js';
-import auth from './routes/auth.js';
-import {error} from './middleware/error.js';
-import mongoose from "mongoose";
-import users from './routes/users.js';
-import joiObjectid from "joi-objectid";
-import Joi from "joi";
-import config from "config";
-
-
-if(!config.get('jwtPrivateKey')){
-    console.error('FATAL ERROR: jwtPrivateKey is not defined');
-    process.exit(1);
-}
-
-Joi.objectId = joiObjectid(Joi);
+import "express-async-errors";
+import { setupRoutes } from './startup/routes.js';
+import { setupDatabase } from './startup/database.js';
+import { logger } from './startup/logging.js';
+import { startupConfig } from './startup/config.js';
+import { setupValidation } from './startup/validation.js';
 
 const app = express();
-app.use(express.json());
-
-app.use("/api/genres",genres);
-app.use("/api/customers",customers);
-app.use("/api/movies",movies);
-app.use("/api/rentals", rentals);
-app.use("/api/users", users);
-app.use("/api/auth", auth);
-
-// Error handling middleware : we call this after all the routes
-app.use(error);
-
-mongoose.connect('mongodb://localhost/vidly')
-    .then(() => {
-        console.log('Connected to MongoDB...');
-    })
-    .catch(err => console.error('Could not connect to MongoDB...'+ err));
-
+setupRoutes(app);
+setupDatabase();
+startupConfig();
+setupValidation();
 
 app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+    logger.info('Server started on port 3000');
 });
+
+
+// process.on('uncaughtException', (ex) => {
+//     // console.log('WE GOT AN Unhadled EXCEPTION');
+//     logger.error(ex.message, ex);
+//     process.exit(1);
+// });
+
+// throw new Error('Something failed during startup!');
+
+// process.on('uncaughtRejection', (ex) => {
+//     // console.log('WE GOT AN Unhadled EXCEPTION');
+//     logger.error(ex.message, ex);
+//     process.exit(1);
+// });
+
+
+// const p = Promise.reject(new Error('Something failed miserably!'));
+// p.then(() => console.log('Done'));
+
+

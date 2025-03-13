@@ -3,19 +3,18 @@ import mongoose from 'mongoose';
 import { Genre, validateGenre } from '../models/genre.js';
 import { auth } from '../middleware/auth.js';
 import { admin } from '../middleware/admin.js';
-import { asyncMiddleware } from '../middleware/async.js';
+import "express-async-errors";
 
 const router = express.Router();
 
-
-
-router.get('/', asyncMiddleware(async (req, res) => {
+router.get('/', async (req, res) => {
     const result = await Genre.find().sort('name');
     res.send(result);
     console.log(result);
-}));
+});
 
-router.get('/:id', asyncMiddleware(async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
+
 
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
         return res.status(404).send('Invalid ID Type');
@@ -26,7 +25,7 @@ router.get('/:id', asyncMiddleware(async (req, res, next) => {
     if (!genre) return res.status(404).send('The genre with the given ID was not found');
 
     res.send(genre);
-}));
+});
 
 router.post('/', auth, async (req, res) => {
     try {
