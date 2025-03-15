@@ -12,5 +12,17 @@
     "mongoose": "^8.12.1",
     "winston": "^3.17.0",
     "winston-mongodb": "^6.0.0"
+  },
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --verbose --detectOpenHandles --coverage"
+  },
+  "jest": {
+    "transform": {
+
+    }
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }

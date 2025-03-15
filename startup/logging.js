@@ -5,9 +5,10 @@ console.log("Logging defined");
 
 const winstonFormat = winston.format.combine(
     winston.format.json(), 
-    winston.format.prettyPrint(), 
-    winston.format.colorize(),
-    winston.format.timestamp(),
+    // winston.format.prettyPrint(), 
+    // winston.format.colorize(),
+    winston.format.simple(),
+    // winston.format.timestamp(),
 );
 
 const logger = winston.createLogger(

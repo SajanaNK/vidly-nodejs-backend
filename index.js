@@ -12,9 +12,11 @@ setupDatabase();
 startupConfig();
 setupValidation();
 
-app.listen(3000, () => {
+const server = app.listen(3000, () => {
     logger.info('Server started on port 3000');
 });
+
+export { server };
 
 
 // process.on('uncaughtException', (ex) => {

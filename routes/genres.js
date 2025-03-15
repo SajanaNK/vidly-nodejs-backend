@@ -4,6 +4,7 @@ import { Genre, validateGenre } from '../models/genre.js';
 import { auth } from '../middleware/auth.js';
 import { admin } from '../middleware/admin.js';
 import "express-async-errors";
+import { validateObjectId } from '../middleware/validateObjectId.js';
 
 const router = express.Router();
 
@@ -13,12 +14,12 @@ router.get('/', async (req, res) => {
     console.log(result);
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', validateObjectId , async (req, res, next) => {
 
 
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-        return res.status(404).send('Invalid ID Type');
-    }
+    // if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    //     return res.status(404).send('Invalid ID Type');
+    // }
 
     const genre = await Genre.findById(req.params.id);
 

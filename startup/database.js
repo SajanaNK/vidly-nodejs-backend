@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
 import {logger} from '../startup/logging.js';
+import config from 'config';
 
 export function setupDatabase(){
-    mongoose.connect('mongodb://localhost/vidly')
+    const db = config.get('db');
+    mongoose.connect(db)
     .then(() => {
-        logger.info('Connected to MongoDB...');
+        logger.info(`Connected to ${db}...`);
     });
 }
