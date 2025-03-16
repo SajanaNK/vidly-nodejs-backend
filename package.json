@@ -20,6 +20,9 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --verbose --detectOpenHandles",
     "start": "node index.js"
   },
+  "engines": {
+    "node": "22.14.0"
+  },
   "jest": {
     "transform": {}
   },
