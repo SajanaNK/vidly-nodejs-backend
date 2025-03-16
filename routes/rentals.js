@@ -87,7 +87,7 @@ router.post('/', auth, async (req,res) => {
         console.log(error);
         res.status(500).send('Something went wrong : ' + error);
     }
-})
+});
 
 
 

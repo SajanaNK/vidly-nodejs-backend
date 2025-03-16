@@ -5,13 +5,14 @@ import { auth } from '../middleware/auth.js';
 import { admin } from '../middleware/admin.js';
 import "express-async-errors";
 import { validateObjectId } from '../middleware/validateObjectId.js';
+import { validate } from '../middleware/validate.js';
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
     const result = await Genre.find().sort('name');
     res.send(result);
-    console.log(result);
+    // console.log(result);
 });
 
 router.get('/:id', validateObjectId , async (req, res, next) => {
@@ -28,12 +29,12 @@ router.get('/:id', validateObjectId , async (req, res, next) => {
     res.send(genre);
 });
 
-router.post('/', auth, async (req, res) => {
+router.post('/', [auth,validate(validateGenre)], async (req, res) => {
     try {
 
-        const { error } = validateGenre(req.body);
+        // const { error } = validateGenre(req.body);
 
-        if (error) return res.status(400).send(error.details[0].message);
+        // if (error) return res.status(400).send(error.details[0].message);
 
         let genre = new Genre({
             name: req.body.name

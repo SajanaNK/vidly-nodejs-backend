@@ -5,12 +5,14 @@ import { setupDatabase } from './startup/database.js';
 import { logger } from './startup/logging.js';
 import { startupConfig } from './startup/config.js';
 import { setupValidation } from './startup/validation.js';
+import { prod } from './startup/prod.js';
 
 const app = express();
 setupRoutes(app);
 setupDatabase();
 startupConfig();
 setupValidation();
+
 
 const server = app.listen(3000, () => {
     logger.info('Server started on port 3000');

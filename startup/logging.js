@@ -1,7 +1,7 @@
 import winston from "winston";
 import 'winston-mongodb'
 
-console.log("Logging defined");
+// console.log("Logging defined");
 
 const winstonFormat = winston.format.combine(
     winston.format.json(), 
